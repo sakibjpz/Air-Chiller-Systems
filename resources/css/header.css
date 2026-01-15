@@ -1,0 +1,346 @@
+/* ================= GLOBAL HEADER STYLES ================= */
+.sticky-header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ================= TOP HEADER ================= */
+.header-top {
+    background: linear-gradient(90deg, #f0f7ff 0%, #e6f0ff 100%);
+    border-bottom: 1px solid #d1e0ff;
+}
+
+.top-left span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.top-left i {
+    color: #164DFF;
+    font-size: 0.875rem;
+}
+
+.social-icons a {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dbeafe;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #164DFF;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(22, 77, 255, 0.2);
+}
+
+/* ================= MAIN HEADER ================= */
+.main-header {
+    position: relative;
+    z-index: 30;
+}
+
+
+
+.logo {
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.02);
+}
+
+.logo i {
+    filter: drop-shadow(0 2px 3px rgba(22, 77, 255, 0.2));
+}
+
+.logo-text {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* ================= DESKTOP NAVIGATION ================= */
+.desktop-nav {
+    /* REMOVE the background property */
+    /* background: linear-gradient(135deg, #164DFF 0%, #2387B9 100%); */
+    box-shadow: none; /* Also remove box shadow since it's inside header */
+}
+
+.nav-menu {
+    position: relative;
+}
+
+.nav-menu li a {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.nav-menu li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px 2px 0 0;
+}
+
+.nav-menu li a:hover::after {
+    width: 60%;
+}
+
+.nav-menu li a.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    position: relative;
+}
+
+.nav-menu li a.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #ffd700;
+}
+
+/* ================= SEARCH BOX ================= */
+.search-box input:focus {
+    box-shadow: 0 0 0 3px rgba(22, 77, 255, 0.1);
+}
+
+.search-box button {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.search-box button:hover {
+    box-shadow: 0 4px 12px rgba(22, 77, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+/* ================= MOBILE MENU ================= */
+.mobile-menu {
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.mobile-nav a {
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.mobile-nav a:hover {
+    border-left-color: #164DFF;
+    padding-left: 1rem;
+}
+
+.mobile-nav li:first-child a {
+    background: linear-gradient(90deg, #f0f7ff 0%, #e6f2ff 100%);
+    border-left-color: #164DFF;
+}
+
+#closeMobileMenu {
+    transition: transform 0.2s ease;
+}
+
+#closeMobileMenu:hover {
+    transform: rotate(90deg);
+}
+
+/* ================= RESPONSIVE ADJUSTMENTS ================= */
+@media (max-width: 768px) {
+    .top-left {
+        flex-direction: column;
+        gap: 0.25rem;
+        align-items: flex-start;
+    }
+    
+    .logo-text div:first-child {
+        font-size: 1.125rem;
+    }
+    
+    .logo-text div:last-child {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .header-top {
+        font-size: 0.75rem;
+    }
+    
+    .social-icons a {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+    }
+}
+
+/* ================= SCROLL BEHAVIOR ================= */
+.sticky-header-wrapper {
+    transition: all 0.3s ease;
+}
+
+.sticky-header-wrapper.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-header-wrapper.scrolled .header-top {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-size: 0.75rem;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.sticky-header-wrapper {
+    animation: slideDown 0.4s ease-out;
+}
+
+/* ================= PRINT STYLES ================= */
+@media print {
+    .sticky-header-wrapper {
+        position: static;
+        box-shadow: none;
+    }
+    
+    .header-top,
+    .desktop-nav,
+    .mobile-menu-toggle,
+    .search-box {
+        display: none !important;
+    }
+}
+
+
+
+
+/* ================= BANNER SLIDER ================= */
+
+
+
+
+.banner-slider {
+    margin-top: -1px; /* Remove gap between header and banner */
+}
+
+/* Banner content animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.banner-slider [x-show] > div > div {
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .banner-slider .absolute.inset-0 {
+        background-position: center;
+    }
+    
+    .banner-slider h1 {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .banner-slider .flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .banner-slider .flex a,
+    .banner-slider .flex button {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .banner-slider h1 {
+        font-size: 2.5rem;
+    }
+    
+    .banner-slider p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Accessibility */
+.banner-slider button:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+/* Loading state */
+.banner-slider img {
+    transition: opacity 0.3s ease;
+}
+
+.banner-slider img:not([loaded]) {
+    opacity: 0;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .banner-slider button {
+        min-height: 44px; /* Apple recommended minimum touch target */
+        min-width: 44px;
+    }
+    
+    .banner-slider .navigation-dots button {
+        min-width: 20px;
+        min-height: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+

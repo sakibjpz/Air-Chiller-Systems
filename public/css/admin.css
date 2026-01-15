@@ -1,0 +1,18 @@
+/* Admin panel basic styles */
+nav.bg-blue-800 {
+    background-color: #1e40af;
+}
+
+/* Fix white/redish issue */
+.bg-blue-600 {
+    background-color: #2563eb;
+}
+
+.text-blue-200 {
+    color: #bfdbfe;
+}
+
+/* Ensure admin colors are not overridden by frontend CSS */
+.admin-panel * {
+    box-sizing: border-box;
+}
