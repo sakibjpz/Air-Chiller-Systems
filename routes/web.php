@@ -4,10 +4,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\SolutionController;
 use App\Http\Controllers\Admin\CoreValueController;
 use App\Http\Controllers\Admin\ProductLineupController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+
+
+
+
+
+
+
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -22,6 +32,23 @@ Route::get('/about-us', function () {
 Route::get('/services', function () {
     return view('frontend.services.index');
 })->name('services');
+
+
+// Public client routes
+Route::get('/clients', function () {
+    $clients = \App\Models\Client::active()->ordered()->get();
+    return view('frontend.clients.index', compact('clients'));
+})->name('clients');
+
+// Contact page route
+Route::get('/contact', function () {
+    return view('frontend.contact.index');
+})->name('contact');
+
+
+// News routes
+Route::get('/news', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{slug}', [\App\Http\Controllers\NewsController::class, 'show'])->name('news.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -67,6 +94,16 @@ Route::resource('/admin/certifications', \App\Http\Controllers\Admin\Certificati
 
 // Admin gallery routes
 Route::resource('/admin/galleries', \App\Http\Controllers\Admin\GalleryController::class)->names('admin.galleries');
+
+
+// Admin clients routes
+Route::resource('/admin/clients', ClientController::class)->names('admin.clients');
+
+// Admin news routes
+Route::resource('/admin/news', \App\Http\Controllers\Admin\NewsController::class)->names('admin.news');
+
+// Admin banner slides routes
+Route::resource('/admin/banner-slides', \App\Http\Controllers\Admin\BannerSlideController::class)->names('admin.banner-slides');
 
 });
 

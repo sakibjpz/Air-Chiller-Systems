@@ -13,10 +13,16 @@ class Product extends Model
         'name',
         'slug',
         'description',
+        'features',  // Added this
         'image',
         'category',
         'sort_order',
         'is_active',
+    ];
+
+    protected $casts = [
+        'features' => 'array',  // Added this
+        'is_active' => 'boolean',
     ];
 
     // Get active products
@@ -36,8 +42,26 @@ class Product extends Model
     {
         return $query->orderBy('sort_order')->orderBy('name');
     }
+
     public function categoryRelation()
-{
-    return $this->belongsTo(Category::class, 'category', 'slug');
-}
+    {
+        return $this->belongsTo(Category::class, 'category', 'slug');
+    }
+
+    // Get features as array (with fallback)
+    public function getFeaturesArrayAttribute()
+    {
+        if ($this->features && is_array($this->features)) {
+            return $this->features;
+        }
+        
+        // Fallback: extract from description or return default features
+        return [
+            'High Efficiency Performance',
+            'Energy Saving Technology',
+            'Durable Construction',
+            'Easy Maintenance',
+            'Industry Certified'
+        ];
+    }
 }

@@ -35,6 +35,12 @@
 <!-- Latest Gallery Section -->
 @include('partials.gallery')
 
+<!-- Clients Section -->
+    @include('partials.clients')
+
+    <!-- Latest News Section -->
+    @include('partials.news')
+
     
 
     <!-- Call to Action -->

@@ -52,6 +52,24 @@
                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                               placeholder="Product details and specifications">{{ old('description', $product->description) }}</textarea>
                 </div>
+                <!-- Features -->
+<!-- Features -->
+<div>
+    <label for="features" class="block text-sm font-medium text-gray-700 mb-1">
+        Features (One per line)
+    </label>
+    <textarea id="features" name="features" rows="6"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter each feature on a new line:
+• High Efficiency
+• Energy Saving
+• Durable Construction
+• Easy Maintenance
+• Industry Certified">@if($product->features && is_array(json_decode($product->features, true))){{ implode("\n", json_decode($product->features, true)) }}@endif</textarea>
+    <p class="text-xs text-gray-500 mt-1">
+        Enter one feature per line. These will be displayed as bullet points.
+    </p>
+</div>
             </div>
 
             <!-- Right Column -->

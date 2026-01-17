@@ -78,8 +78,8 @@
          class="h-16 w-auto">
 </a>
 
-                <!-- Desktop Navigation -->
-               <nav class="desktop-nav hidden md:block flex-grow mx-4">
+               <!-- Desktop Navigation -->
+<nav class="desktop-nav hidden md:block flex-grow mx-4">
     <ul class="nav-menu flex justify-center space-x-1">
         <li>
             <a href="{{ url('/') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
@@ -87,32 +87,60 @@
             </a>
         </li>
         <li>
-    <a href="{{ route('about') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-        About us
-    </a>
-</li>
-        <li>
-            <a href="#" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Product
+            <a href="{{ route('about') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
+                About us
             </a>
         </li>
         <li>
-    <a href="{{ route('services') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-        Service
-    </a>
-</li>
-        <li>
-            <a href="#" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Client
+            <a href="{{ route('products.index') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
+                Products
             </a>
         </li>
         <li>
-            <a href="#" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
+            <a href="{{ route('services') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
+                Services
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('clients') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
+                Clients
+            </a>
+        </li>
+        <!-- Pages Dropdown (Only News for now) -->
+        <li class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+            <button class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium flex items-center">
                 Pages
-            </a>
+                <i class="fas fa-chevron-down ml-1 text-xs transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
+            </button>
+            
+            <!-- Dropdown Menu -->
+            <div x-show="open" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 translate-y-1"
+                 class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50"
+                 style="display: none;"
+                 @click.away="open = false">
+                <div class="py-2">
+                    <!-- News & Blogs -->
+                    <a href="{{ route('news.index') }}" 
+                       class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition group">
+                        <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center mr-3 group-hover:bg-blue-200 transition">
+                            <i class="fas fa-newspaper text-blue-600 text-sm"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">News & Blogs</div>
+                            <div class="text-xs text-gray-500">Latest updates</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </li>
         <li>
-            <a href="#" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
+            <a href="{{ route('contact') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
                 Contact us
             </a>
         </li>
@@ -157,45 +185,56 @@
                 </div>
             </div>
 
-            <!-- Mobile Navigation -->
-            <ul class="mobile-nav space-y-2">
-                <li>
-                    <a href="#" class="block py-2 px-3 bg-blue-50 text-blue-600 rounded-lg font-medium">
-                        <i class="fas fa-home mr-3"></i>Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                        <i class="fas fa-info-circle mr-3"></i>About us
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                        <i class="fas fa-box mr-3"></i>Product
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                        <i class="fas fa-cogs mr-3"></i>Service
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                        <i class="fas fa-users mr-3"></i>Client
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                        <i class="fas fa-file-alt mr-3"></i>Pages
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                        <i class="fas fa-phone-alt mr-3"></i>Contact us
-                    </a>
-                </li>
-            </ul>
-
+         <!-- Mobile Navigation -->
+<ul class="mobile-nav space-y-2">
+    <li>
+        <a href="{{ url('/') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+            <i class="fas fa-home mr-3"></i>Home
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('about') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+            <i class="fas fa-info-circle mr-3"></i>About us
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('products.index') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+            <i class="fas fa-box mr-3"></i>Products
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('services') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+            <i class="fas fa-cogs mr-3"></i>Services
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('clients') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+            <i class="fas fa-users mr-3"></i>Clients
+        </a>
+    </li>
+    
+    <!-- Pages Dropdown (Mobile) -->
+    <li class="mobile-dropdown">
+        <div class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 rounded-lg transition cursor-pointer" onclick="toggleMobileDropdown(this)">
+            <div class="flex items-center">
+                <i class="fas fa-file-alt mr-3"></i>
+                <span>Pages</span>
+            </div>
+            <i class="fas fa-chevron-down transition-transform"></i>
+        </div>
+        <div class="mobile-dropdown-content hidden pl-6 mt-2 space-y-2">
+            <a href="{{ route('news.index') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+                <i class="fas fa-newspaper mr-3"></i>News & Blogs
+            </a>
+        </div>
+    </li>
+    
+    <li>
+        <a href="{{ route('contact') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
+            <i class="fas fa-phone-alt mr-3"></i>Contact us
+        </a>
+    </li>
+</ul>
             <!-- Mobile Social Icons -->
             <div class="mobile-social mt-8 pt-6 border-t border-gray-200">
                 <p class="text-gray-600 mb-3">Follow us:</p>
@@ -339,12 +378,8 @@ $slides = [
     @yield('content')
 </main>
 
-<!-- Simple Footer (Add your actual footer later) -->
-<footer class="bg-blue-900 text-white py-8">
-    <div class="container mx-auto px-4">
-        <p class="text-center">&copy; {{ date('Y') }} Mohiuddin Engineering Limited. All rights reserved.</p>
-    </div>
-</footer>
+<!-- Include Footer -->
+@include('partials.footer')
 
 <!-- JavaScript -->
 <script>
@@ -360,9 +395,18 @@ document.addEventListener('alpine:init', () => {
             this.totalSlides = total;
             this.loadedImages = new Array(total).fill(false);
             
-            if (autoplay) {
-                this.startAutoplay(interval);
-            }
+            // Force show first slide on init
+            this.currentSlide = 0;
+            
+            // Small delay to ensure DOM is ready
+            this.$nextTick(() => {
+                // Show first slide
+                this.showCurrentSlide();
+                
+                if (autoplay) {
+                    this.startAutoplay(interval);
+                }
+            });
             
             // Pause autoplay when tab is not visible
             document.addEventListener('visibilitychange', () => {
@@ -370,6 +414,16 @@ document.addEventListener('alpine:init', () => {
                     this.pause();
                 } else if (this.isPlaying) {
                     this.resume(interval);
+                }
+            });
+        },
+        
+        showCurrentSlide() {
+            // This ensures the current slide is visible
+            const slides = this.$el.querySelectorAll('[x-show]');
+            slides.forEach((slide, index) => {
+                if (index === this.currentSlide) {
+                    slide.style.display = 'block';
                 }
             });
         },
@@ -383,14 +437,17 @@ document.addEventListener('alpine:init', () => {
         
         nextSlide() {
             this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+            this.showCurrentSlide();
         },
         
         prevSlide() {
             this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+            this.showCurrentSlide();
         },
         
         goToSlide(index) {
             this.currentSlide = index;
+            this.showCurrentSlide();
         },
         
         pause() {
@@ -413,12 +470,6 @@ document.addEventListener('alpine:init', () => {
     }));
 });
 
-
-
-
-
-
-
 // Mobile Menu JavaScript
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
@@ -439,6 +490,27 @@ if (mobileMenuToggle && mobileMenu && closeMobileMenu) {
         }
     });
 }
+
+// Mobile dropdown functionality
+function toggleMobileDropdown(element) {
+    const dropdownContent = element.nextElementSibling;
+    const chevron = element.querySelector('.fa-chevron-down');
+    
+    dropdownContent.classList.toggle('hidden');
+    chevron.classList.toggle('rotate-180');
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.mobile-dropdown')) {
+        document.querySelectorAll('.mobile-dropdown-content').forEach(function(dropdown) {
+            dropdown.classList.add('hidden');
+        });
+        document.querySelectorAll('.mobile-dropdown .fa-chevron-down').forEach(function(chevron) {
+            chevron.classList.remove('rotate-180');
+        });
+    }
+});
 </script>
 
 @stack('scripts')

@@ -96,6 +96,24 @@
     </a>
 </li>
 
+<li>
+    <a href="{{ route('admin.clients.index') }}" class="flex items-center p-2 hover:bg-gray-700 rounded">
+        <i class="fas fa-users mr-3"></i>Clients
+    </a>
+</li>
+
+<li>
+    <a href="{{ route('admin.news.index') }}" class="flex items-center p-2 hover:bg-gray-700 rounded">
+        <i class="fas fa-newspaper mr-3"></i>News & Blogs
+    </a>
+</li>
+
+<li>
+    <a href="{{ route('admin.banner-slides.index') }}" class="flex items-center p-2 hover:bg-gray-700 rounded">
+        <i class="fas fa-images mr-3"></i>Banner Slides
+    </a>
+</li>
+
 
                     <li>
                         <a href="#" class="flex items-center p-2 hover:bg-gray-700 rounded">
