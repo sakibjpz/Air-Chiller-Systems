@@ -9,7 +9,6 @@
         <p class="text-gray-600">Update banner slide details</p>
     </div>
 
-    <!-- Back Button -->
     <div class="mb-6">
         <a href="{{ route('admin.banner-slides.index') }}" 
            class="inline-flex items-center text-blue-600 hover:text-blue-800">
@@ -18,14 +17,12 @@
         </a>
     </div>
 
-    <!-- Form -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <form action="{{ route('admin.banner-slides.update', $bannerSlide) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             
             <div class="p-6 space-y-6">
-                <!-- Current Image -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Current Image
@@ -50,7 +47,6 @@
                     </div>
                 </div>
 
-                <!-- Title -->
                 <div>
                     <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
                         Title *
@@ -67,7 +63,6 @@
                     @enderror
                 </div>
 
-                <!-- Subtitle -->
                 <div>
                     <label for="subtitle" class="block text-sm font-medium text-gray-700 mb-2">
                         Subtitle (Optional)
@@ -83,7 +78,6 @@
                     @enderror
                 </div>
 
-                <!-- Description -->
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
                         Description (Optional)
@@ -98,7 +92,6 @@
                     @enderror
                 </div>
 
-                <!-- Button Text -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="button_text" class="block text-sm font-medium text-gray-700 mb-2">
@@ -131,7 +124,6 @@
                     </div>
                 </div>
 
-                <!-- New Image -->
                 <div>
                     <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
                         Upload New Image (Optional)
@@ -159,7 +151,6 @@
                     </div>
                 </div>
 
-                <!-- Sort Order -->
                 <div>
                     <label for="sort_order" class="block text-sm font-medium text-gray-700 mb-2">
                         Sort Order
@@ -170,15 +161,11 @@
                            value="{{ old('sort_order', $bannerSlide->sort_order) }}"
                            class="w-32 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                            placeholder="0">
-                    <p class="mt-2 text-sm text-gray-500">
-                        Lower numbers appear first.
-                    </p>
                     @error('sort_order')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Active Status -->
                 <div>
                     <div class="flex items-center">
                         <input type="checkbox" 
@@ -191,25 +178,16 @@
                             Active (Show on homepage)
                         </label>
                     </div>
-                    <p class="mt-2 text-sm text-gray-500">
-                        If unchecked, this slide will be hidden from the homepage.
-                    </p>
                 </div>
             </div>
 
-            <!-- Form Footer -->
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
-                <form action="{{ route('admin.banner-slides.destroy', $bannerSlide) }}" 
-                      method="POST" 
-                      onsubmit="return confirm('Are you sure you want to delete this slide? This action cannot be undone.')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" 
-                            class="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 transition flex items-center">
-                        <i class="fas fa-trash mr-2"></i>
-                        Delete Slide
-                    </button>
-                </form>
+                <button type="button" 
+                        onclick="if(confirm('Are you sure? This action cannot be undone.')) { document.getElementById('delete-slide-form').submit(); }"
+                        class="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 transition flex items-center">
+                    <i class="fas fa-trash mr-2"></i>
+                    Delete Slide
+                </button>
                 
                 <div class="flex space-x-3">
                     <a href="{{ route('admin.banner-slides.index') }}" 
@@ -227,6 +205,11 @@
     </div>
 </div>
 
+<form id="delete-slide-form" action="{{ route('admin.banner-slides.destroy', $bannerSlide) }}" method="POST" class="hidden">
+    @csrf
+    @method('DELETE')
+</form>
+
 <script>
 function previewImage(event) {
     const input = event.target;
@@ -235,12 +218,10 @@ function previewImage(event) {
     
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        
         reader.onload = function(e) {
             preview.src = e.target.result;
             container.classList.remove('hidden');
         }
-        
         reader.readAsDataURL(input.files[0]);
     } else {
         preview.src = '';

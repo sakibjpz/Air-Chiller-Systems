@@ -39,9 +39,9 @@
 .social-icons a:hover {
     background-color: #164DFF;
     color: white !important;
-    transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(22, 77, 255, 0.2);
 }
+
 
 /* ================= MAIN HEADER ================= */
 .main-header {
@@ -55,9 +55,9 @@
     transition: transform 0.3s ease;
 }
 
-.logo:hover {
+/* .logo:hover {
     transform: scale(1.02);
-}
+} */
 
 .logo i {
     filter: drop-shadow(0 2px 3px rgba(22, 77, 255, 0.2));
@@ -86,7 +86,7 @@
     letter-spacing: 0.3px;
 }
 
-.nav-menu li a::after {
+/* .nav-menu li a::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -101,7 +101,7 @@
 
 .nav-menu li a:hover::after {
     width: 60%;
-}
+} */
 
 .nav-menu li a.active {
     background-color: rgba(255, 255, 255, 0.15);
@@ -130,8 +130,8 @@
 
 .search-box button:hover {
     box-shadow: 0 4px 12px rgba(22, 77, 255, 0.3);
-    transform: translateY(-1px);
 }
+
 
 /* ================= MOBILE MENU ================= */
 .mobile-menu {
@@ -201,9 +201,9 @@
 }
 
 /* ================= SCROLL BEHAVIOR ================= */
-.sticky-header-wrapper {
+/* .sticky-header-wrapper {
     transition: all 0.3s ease;
-}
+} */
 
 .sticky-header-wrapper.scrolled {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -227,9 +227,9 @@
     }
 }
 
-.sticky-header-wrapper {
+/* .sticky-header-wrapper {
     animation: slideDown 0.4s ease-out;
-}
+} */
 
 /* ================= PRINT STYLES ================= */
 @media print {
@@ -254,9 +254,9 @@
 
 
 
-.banner-slider {
-    margin-top: -1px; /* Remove gap between header and banner */
-}
+/* .banner-slider {
+    margin-top: -1px; 
+} */
 
 /* Banner content animations */
 @keyframes fadeInUp {

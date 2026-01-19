@@ -29,10 +29,13 @@ class BannerSlideController extends Controller
             'button_text' => 'nullable|string|max:50',
             'button_link' => 'nullable|string|max:255',
             'sort_order' => 'nullable|integer',
-            'is_active' => 'boolean'
+            'is_active' => 'nullable' // Changed to nullable to handle missing checkbox key
         ]);
 
-        // Handle image upload - FOLLOWING YOUR PATTERN
+        // Explicitly handle checkbox boolean
+        $validated['is_active'] = $request->has('is_active');
+
+        // Handle image upload
         if ($request->hasFile('image')) {
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path('images/banner'), $imageName);
@@ -60,10 +63,13 @@ class BannerSlideController extends Controller
             'button_text' => 'nullable|string|max:50',
             'button_link' => 'nullable|string|max:255',
             'sort_order' => 'nullable|integer',
-            'is_active' => 'boolean'
+            'is_active' => 'nullable' // Changed to nullable to handle missing checkbox key
         ]);
 
-        // Handle image upload - FOLLOWING YOUR PATTERN
+        // Explicitly handle checkbox boolean (Crucial fix for updates)
+        $validated['is_active'] = $request->has('is_active');
+
+        // Handle image upload
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($bannerSlide->image && file_exists(public_path($bannerSlide->image))) {
@@ -74,6 +80,7 @@ class BannerSlideController extends Controller
             $request->file('image')->move(public_path('images/banner'), $imageName);
             $validated['image'] = 'images/banner/' . $imageName;
         } else {
+            // If no new image is uploaded, remove 'image' from array so we don't overwrite DB with null
             unset($validated['image']);
         }
 
@@ -85,7 +92,7 @@ class BannerSlideController extends Controller
 
     public function destroy(BannerSlide $bannerSlide)
     {
-        // Delete image if exists
+        // Delete image file if exists before deleting record
         if ($bannerSlide->image && file_exists(public_path($bannerSlide->image))) {
             unlink(public_path($bannerSlide->image));
         }
