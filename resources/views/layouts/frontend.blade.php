@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,44 +15,35 @@
     @vite(['resources/css/app.css', 'resources/css/header.css'])
     
     @stack('styles')
-    
-    <style>
-    [x-cloak] {
-        display: none !important;
-    }
-    
-    /* .banner-slider {
-        margin-top: -1px;
-    } */
-    </style>
 </head>
-<body class="bg-gray-50">
+<body>
 
-<!-- ================= STICKY HEADER WRAPPER ================= -->
-<div class="sticky-header-wrapper">
-    <!-- ================= TOP HEADER ================= -->
-    <div class="header-top bg-gray-100 text-blue-600 text-sm py-2 hidden md:block">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <div class="top-left flex space-x-4">
-                <span class="flex items-center">
-                    <i class="fas fa-phone-alt mr-2"></i>
-                    Call No: +880(121) 456 77
-                </span>
-                <span class="flex items-center">
-                    <i class="fas fa-envelope mr-2"></i>
-                    Email: mohiuddinrengineering@gmail.com
-                </span>
+<!-- ==================== HEADER START ==================== -->
+<header class="site-header">
+    
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-bar-left">
+              <a href="tel:+8801214567777" class="top-bar-link" data-tooltip="+880(121) 456 77">
+    <i class="fas fa-phone-alt"></i>
+    <span>Call No: +880(121) 456 77</span>
+</a>
+<a href="mailto:mohiuddinrengineering@gmail.com" class="top-bar-link" data-tooltip="Email Us">
+    <i class="fas fa-envelope"></i>
+    <span>Email: mohiuddinrengineering@gmail.com</span>
+</a>
             </div>
-            <div class="top-right flex items-center">
-                <span class="mr-4 hidden lg:inline">Follow us:</span>
-                <div class="social-icons flex space-x-3">
-                    <a href="https://facebook.com" target="_blank" class="hover:text-blue-800 transition">
+            <div class="top-bar-right">
+                <span class="follow-text">Follow us:</span>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://linkedin.com" target="_blank" class="hover:text-blue-800 transition">
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://twitter.com" target="_blank" class="hover:text-blue-800 transition">
+                    <a href="https://twitter.com" target="_blank" aria-label="Twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
                 </div>
@@ -61,338 +51,219 @@
         </div>
     </div>
 
-    <!-- ================= MAIN HEADER ================= -->
-    <header class="main-header bg-white shadow-sm py-4">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center">
-                
-                <!-- Mobile Hamburger -->
-                <button class="hamburger md:hidden text-blue-600 text-2xl" type="button" id="mobileMenuToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-
-                <!-- Logo -->
-                <a href="{{ url('/') }}" class="logo">
-   <img src="{{ asset('assets/images/logo.png') }}" 
-         alt="Mohiuddin Engineering Limited Logo"
-         class="h-16 w-auto">
-</a>
-
-               <!-- Desktop Navigation -->
-<nav class="desktop-nav hidden md:block flex-grow mx-4">
-    <ul class="nav-menu flex justify-center space-x-1">
-        <li>
-            <a href="{{ url('/') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Home
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('about') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                About us
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('products.index') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Products
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('services') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Services
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('clients') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Clients
-            </a>
-        </li>
-        <!-- Pages Dropdown (Only News for now) -->
-        <li class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-            <button class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium flex items-center">
-                Pages
-                <i class="fas fa-chevron-down ml-1 text-xs transition-transform duration-300" :class="{ 'rotate-180': open }"></i>
-            </button>
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="main-header-container">
             
-            <!-- Dropdown Menu -->
-            <div x-show="open" 
-                 x-transition:enter="transition ease-out duration-200"
-                 x-transition:enter-start="opacity-0 translate-y-1"
-                 x-transition:enter-end="opacity-100 translate-y-0"
-                 x-transition:leave="transition ease-in duration-150"
-                 x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 translate-y-1"
-                 class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50"
-                 style="display: none;"
-                 @click.away="open = false">
-                <div class="py-2">
-                    <!-- News & Blogs -->
-                    <a href="{{ route('news.index') }}" 
-                       class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition group">
-                        <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center mr-3 group-hover:bg-blue-200 transition">
-                            <i class="fas fa-newspaper text-blue-600 text-sm"></i>
-                        </div>
-                        <div>
-                            <div class="font-medium">News & Blogs</div>
-                            <div class="text-xs text-gray-500">Latest updates</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </li>
-        <li>
-            <a href="{{ route('contact') }}" class="text-blue-800 hover:bg-blue-50 px-4 py-3 inline-block transition font-medium">
-                Contact us
+            <!-- Logo -->
+            <a href="{{ url('/') }}" class="logo">
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Mohiuddin Engineering Limited">
             </a>
-        </li>
-    </ul>
-</nav>
-                <!-- Desktop Search -->
-                <div class="search-box hidden md:flex">
-                    <div class="flex">
-                        <input type="text" placeholder="Search..." 
-                               class="px-3 py-2 border border-r-0 border-blue-500 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent">
-                        <button type="button" class="bg-blue-700 text-white px-4 rounded-r-lg hover:bg-blue-800 transition">
-                            <i class="fas fa-search"></i>
-                        </button>
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-desktop">
+                <a href="{{ url('/') }}" class="nav-link">Home</a>
+                <a href="{{ route('about') }}" class="nav-link">About us</a>
+                <a href="{{ route('products.index') }}" class="nav-link">Products</a>
+                <a href="{{ route('services') }}" class="nav-link">Services</a>
+                <a href="{{ route('clients') }}" class="nav-link">Clients</a>
+                
+                <!-- Dropdown -->
+                <div class="nav-dropdown" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                    <button @click="open = !open" class="nav-link nav-dropdown-btn">
+                        Pages
+                        <i class="fas fa-chevron-down" :class="{ 'rotated': open }"></i>
+                    </button>
+                    <div x-show="open" 
+                         x-transition:enter="fade-enter"
+                         x-transition:leave="fade-leave"
+                         class="dropdown-menu"
+                         style="display: none;">
+                        <a href="{{ route('news.index') }}" class="dropdown-link">
+                            <i class="fas fa-newspaper"></i>
+                            <div>
+                                <div class="dropdown-title">News & Blogs</div>
+                                <div class="dropdown-desc">Latest updates</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
+                
+                <a href="{{ route('contact') }}" class="nav-link">Contact us</a>
+            </nav>
 
-            </div>
-        </div>
-    </header>
-</div> <!-- This closes sticky-header-wrapper -->
-
-<!-- ================= MOBILE MENU ================= -->
-<div class="mobile-menu hidden fixed inset-0 bg-gray-800 bg-opacity-50 z-50" id="mobileMenu">
-    <div class="absolute right-0 top-0 h-full w-64 bg-white shadow-lg">
-        <div class="p-4">
-            <!-- Mobile Menu Header -->
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold text-blue-800">Menu</h3>
-                <button type="button" class="text-gray-500 text-2xl" id="closeMobileMenu">
-                    <i class="fas fa-times"></i>
+            <!-- Search Box -->
+            <div class="search-box">
+                <input type="search" placeholder="Search..." class="search-input">
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i>
                 </button>
             </div>
 
-            <!-- Mobile Search -->
-            <div class="mb-6">
-                <div class="flex">
-                    <input type="text" placeholder="Search..." 
-                           class="flex-grow px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="button" class="bg-blue-600 text-white px-4 rounded-r-lg">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </div>
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
 
-         <!-- Mobile Navigation -->
-<ul class="mobile-nav space-y-2">
-    <li>
-        <a href="{{ url('/') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-            <i class="fas fa-home mr-3"></i>Home
-        </a>
-    </li>
-    <li>
-        <a href="{{ route('about') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-            <i class="fas fa-info-circle mr-3"></i>About us
-        </a>
-    </li>
-    <li>
-        <a href="{{ route('products.index') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-            <i class="fas fa-box mr-3"></i>Products
-        </a>
-    </li>
-    <li>
-        <a href="{{ route('services') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-            <i class="fas fa-cogs mr-3"></i>Services
-        </a>
-    </li>
-    <li>
-        <a href="{{ route('clients') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-            <i class="fas fa-users mr-3"></i>Clients
-        </a>
-    </li>
-    
-    <!-- Pages Dropdown (Mobile) -->
-    <li class="mobile-dropdown">
-        <div class="flex items-center justify-between py-2 px-3 hover:bg-gray-100 rounded-lg transition cursor-pointer" onclick="toggleMobileDropdown(this)">
-            <div class="flex items-center">
-                <i class="fas fa-file-alt mr-3"></i>
-                <span>Pages</span>
-            </div>
-            <i class="fas fa-chevron-down transition-transform"></i>
-        </div>
-        <div class="mobile-dropdown-content hidden pl-6 mt-2 space-y-2">
-            <a href="{{ route('news.index') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-                <i class="fas fa-newspaper mr-3"></i>News & Blogs
-            </a>
-        </div>
-    </li>
-    
-    <li>
-        <a href="{{ route('contact') }}" class="block py-2 px-3 hover:bg-gray-100 rounded-lg transition">
-            <i class="fas fa-phone-alt mr-3"></i>Contact us
-        </a>
-    </li>
-</ul>
-            <!-- Mobile Social Icons -->
-            <div class="mobile-social mt-8 pt-6 border-t border-gray-200">
-                <p class="text-gray-600 mb-3">Follow us:</p>
-                <div class="flex space-x-4">
-                    <a href="https://facebook.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-xl">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-xl">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://twitter.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-xl">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
-</div>
 
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu-panel">
+        
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <h3>Menu</h3>
+            <button class="mobile-close-btn" id="mobileCloseBtn" aria-label="Close Menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Search -->
+        <div class="mobile-search">
+            <input type="search" placeholder="Search..." class="mobile-search-input">
+            <button type="submit" class="mobile-search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <a href="{{ url('/') }}" class="mobile-nav-link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="{{ route('about') }}" class="mobile-nav-link">
+                <i class="fas fa-info-circle"></i>
+                <span>About us</span>
+            </a>
+            <a href="{{ route('products.index') }}" class="mobile-nav-link">
+                <i class="fas fa-box"></i>
+                <span>Products</span>
+            </a>
+            <a href="{{ route('services') }}" class="mobile-nav-link">
+                <i class="fas fa-cogs"></i>
+                <span>Services</span>
+            </a>
+            <a href="{{ route('clients') }}" class="mobile-nav-link">
+                <i class="fas fa-users"></i>
+                <span>Clients</span>
+            </a>
+            
+            <!-- Mobile Dropdown -->
+            <div class="mobile-nav-dropdown">
+                <button class="mobile-nav-link mobile-dropdown-toggle">
+                    <div class="mobile-dropdown-label">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Pages</span>
+                    </div>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </button>
+                <div class="mobile-dropdown-content">
+                    <a href="{{ route('news.index') }}" class="mobile-dropdown-link">
+                        <i class="fas fa-newspaper"></i>
+                        <span>News & Blogs</span>
+                    </a>
+                </div>
+            </div>
+            
+            <a href="{{ route('contact') }}" class="mobile-nav-link">
+                <i class="fas fa-phone-alt"></i>
+                <span>Contact us</span>
+            </a>
+        </nav>
+
+        <!-- Mobile Social -->
+        <div class="mobile-social">
+            <p>Follow us:</p>
+            <div class="mobile-social-links">
+                <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ==================== HEADER END ==================== -->
 
 <!-- Main Content -->
-<main class="min-h-screen">
+<main>
     @yield('content')
 </main>
 
-<!-- Include Footer -->
+<!-- Footer -->
 @include('partials.footer')
 
 <!-- JavaScript -->
 <script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('bannerSlider', () => ({
-        currentSlide: 0,
-        isPlaying: true,
-        totalSlides: 0,
-        intervalId: null,
-        loadedImages: [],
-        
-        init(autoplay, interval, total) {
-            this.totalSlides = total;
-            this.loadedImages = new Array(total).fill(false);
-            
-            // Force show first slide on init
-            this.currentSlide = 0;
-            
-            // Small delay to ensure DOM is ready
-            this.$nextTick(() => {
-                // Show first slide
-                this.showCurrentSlide();
-                
-                if (autoplay) {
-                    this.startAutoplay(interval);
-                }
-            });
-            
-            // Pause autoplay when tab is not visible
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    this.pause();
-                } else if (this.isPlaying) {
-                    this.resume(interval);
-                }
-            });
-        },
-        
-        showCurrentSlide() {
-            // This ensures the current slide is visible
-            const slides = this.$el.querySelectorAll('[x-show]');
-            slides.forEach((slide, index) => {
-                if (index === this.currentSlide) {
-                    slide.style.display = 'block';
-                }
-            });
-        },
-        
-        startAutoplay(interval) {
-            this.intervalId = setInterval(() => {
-                this.nextSlide();
-            }, interval);
-            this.isPlaying = true;
-        },
-        
-        nextSlide() {
-            this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-            this.showCurrentSlide();
-        },
-        
-        prevSlide() {
-            this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
-            this.showCurrentSlide();
-        },
-        
-        goToSlide(index) {
-            this.currentSlide = index;
-            this.showCurrentSlide();
-        },
-        
-        pause() {
-            if (this.intervalId) {
-                clearInterval(this.intervalId);
-                this.intervalId = null;
-                this.isPlaying = false;
-            }
-        },
-        
-        resume(interval) {
-            if (!this.intervalId) {
-                this.startAutoplay(interval);
-            }
-        },
-        
-        imageLoaded(index) {
-            this.loadedImages[index] = true;
-        }
-    }));
-});
-
-// Mobile Menu JavaScript
-const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+// Mobile Menu Toggle
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
-const closeMobileMenu = document.getElementById('closeMobileMenu');
+const mobileCloseBtn = document.getElementById('mobileCloseBtn');
+const backdrop = document.querySelector('.mobile-menu-backdrop');
 
-if (mobileMenuToggle && mobileMenu && closeMobileMenu) {
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenu.classList.remove('hidden');
-    });
-    
-    closeMobileMenu.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-    });
-    
-    mobileMenu.addEventListener('click', (e) => {
-        if (e.target === mobileMenu) {
-            mobileMenu.classList.add('hidden');
-        }
+function openMobileMenu() {
+    mobileMenu.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+mobileMenuBtn.addEventListener('click', openMobileMenu);
+mobileCloseBtn.addEventListener('click', closeMobileMenu);
+backdrop.addEventListener('click', closeMobileMenu);
+
+// Mobile Dropdown
+const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+const mobileDropdownContent = document.querySelector('.mobile-dropdown-content');
+
+if (mobileDropdownToggle) {
+    mobileDropdownToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        const icon = this.querySelector('.dropdown-icon');
+        mobileDropdownContent.classList.toggle('open');
+        icon.classList.toggle('rotated');
     });
 }
 
-// Mobile dropdown functionality
-function toggleMobileDropdown(element) {
-    const dropdownContent = element.nextElementSibling;
-    const chevron = element.querySelector('.fa-chevron-down');
-    
-    dropdownContent.classList.toggle('hidden');
-    chevron.classList.toggle('rotate-180');
-}
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('.mobile-dropdown')) {
-        document.querySelectorAll('.mobile-dropdown-content').forEach(function(dropdown) {
-            dropdown.classList.add('hidden');
-        });
-        document.querySelectorAll('.mobile-dropdown .fa-chevron-down').forEach(function(chevron) {
-            chevron.classList.remove('rotate-180');
-        });
+// Close menu on escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        closeMobileMenu();
     }
 });
+
+// Sticky header on scroll
+let lastScroll = 0;
+const header = document.querySelector('.site-header');
+
+window.addEventListener('scroll', function() {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+});
+
+
 </script>
 
 @stack('scripts')

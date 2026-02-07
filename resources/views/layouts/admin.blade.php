@@ -114,6 +114,12 @@
     </a>
 </li>
 
+<li>
+    <a href="{{ route('admin.videos.index') }}" class="flex items-center p-2 hover:bg-gray-700 rounded">
+        <i class="fas fa-video mr-3"></i>Video Section
+    </a>
+</li>
+
 
                     <li>
                         <a href="#" class="flex items-center p-2 hover:bg-gray-700 rounded">

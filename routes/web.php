@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\SolutionController;
 use App\Http\Controllers\Admin\CoreValueController;
@@ -32,6 +33,31 @@ Route::get('/about-us', function () {
 Route::get('/services', function () {
     return view('frontend.services.index');
 })->name('services');
+
+//solution route
+Route::get('/solutions/hospital', function () {
+    return view('solutions.hospital');
+})->name('solutions.hospital');
+
+Route::get('/solutions/shopping-mall', function () {
+    return view('solutions.shopping-mall');
+})->name('solutions.shopping-mall');
+
+Route::get('/solutions/hotel', function () {
+    return view('solutions.hotel');
+})->name('solutions.hotel');
+
+Route::get('/solutions/office', function () {
+    return view('solutions.office');
+})->name('solutions.office');
+
+Route::get('/solutions/retail', function () {
+    return view('solutions.retail');
+})->name('solutions.retail');
+
+Route::get('/solutions/residence', function () {
+    return view('solutions.residence');
+})->name('solutions.residence');
 
 
 // Public client routes
@@ -104,6 +130,9 @@ Route::resource('/admin/news', \App\Http\Controllers\Admin\NewsController::class
 
 // Admin banner slides routes
 Route::resource('/admin/banner-slides', \App\Http\Controllers\Admin\BannerSlideController::class)->names('admin.banner-slides');
+
+// Admin video routes
+Route::resource('/admin/videos', VideoController::class)->names('admin.videos');
 
 });
 

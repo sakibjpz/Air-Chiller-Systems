@@ -79,7 +79,7 @@
                         </div>
                         <div class="text-sm">
                             <a href="tel:+88012145677" class="text-blue-200 hover:text-white transition">
-                                +880 (121) 456 77
+                                01750-138901-10
                             </a>
                         </div>
                     </li>
@@ -89,7 +89,7 @@
                         </div>
                         <div class="text-sm">
                             <a href="mailto:mohiuddinengineering@gmail.com" class="text-blue-200 hover:text-white transition">
-                                mohiuddinengineering@gmail.com
+                                info@mohiuddin.com.bd
                             </a>
                         </div>
                     </li>
@@ -98,7 +98,7 @@
                             <i class="fas fa-map-marker-alt text-xs"></i>
                         </div>
                         <div class="text-sm text-blue-200">
-                            Nikunja-2, Dhaka 1229
+                            24, Maddherchar, Shakta, Keranigonj Model, Dhaka-1312
                         </div>
                     </li>
                 </ul>

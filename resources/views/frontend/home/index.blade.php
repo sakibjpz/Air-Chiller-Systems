@@ -6,6 +6,8 @@
 <!-- Banner Slider -->
 @include('partials.banner-slider')
 
+
+
 <div class="container mx-auto px-4 py-8">
     <!-- Welcome Section -->
     <section class="mb-12 text-center">
@@ -16,6 +18,10 @@
             We are a leading engineering solutions provider with decades of experience in industrial and commercial projects.
         </p>
     </section>
+
+
+    <!-- Video Section (Like LG Website) -->
+@include('partials.video-section')
 
     <!-- Include Product Groups Partial -->
     @include('partials.product-groups')

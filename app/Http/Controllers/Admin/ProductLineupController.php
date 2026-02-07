@@ -44,6 +44,11 @@ class ProductLineupController extends Controller
         // Create slug from title
         $validated['slug'] = Str::slug($request->title);
         
+        // FIX: Ensure button_text is not null - use default if empty
+        if (empty($validated['button_text'])) {
+            $validated['button_text'] = 'LEARN MORE'; // Use the default from migration
+        }
+        
         // Handle image upload if present - FOLLOWING YOUR PATTERN
         if ($request->hasFile('image')) {
             // Store in public/images/product-lineups folder
@@ -86,6 +91,11 @@ class ProductLineupController extends Controller
         // Update slug if title changed
         if ($request->title != $productLineup->title) {
             $validated['slug'] = Str::slug($request->title);
+        }
+        
+        // FIX: Ensure button_text is not null - use default if empty
+        if (empty($validated['button_text'])) {
+            $validated['button_text'] = 'LEARN MORE'; // Use the default from migration
         }
         
         // Handle image upload if present - FOLLOWING YOUR PATTERN
