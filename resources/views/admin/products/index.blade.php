@@ -50,20 +50,17 @@
             @endif
         </td>
         <td class="py-3 px-4 font-medium">{{ $product->name }}</td>
-        <td class="py-3 px-4">
-            @php
-                $categoryLabels = [
-                    'hvac' => 'HVAC Systems',
-                    'cooling' => 'Cooling Systems', 
-                    'electrical' => 'Electrical Panels',
-                    'pumps' => 'Water Pumps',
-                    'compression' => 'Compressors',
-                ];
-            @endphp
-            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                {{ $categoryLabels[$product->category] ?? ucfirst($product->category) }}
-            </span>
-        </td>
+       <td class="py-3 px-4">
+    @if($product->category)
+        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+            {{ $product->category->name ?? 'N/A' }}
+        </span>
+    @else
+        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+            No Category
+        </span>
+    @endif
+</td>
         <td class="py-3 px-4">
             @if($product->is_active)
                 <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Active</span>

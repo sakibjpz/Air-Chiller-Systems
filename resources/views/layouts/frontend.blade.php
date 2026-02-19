@@ -63,9 +63,9 @@
             <!-- Desktop Navigation -->
             <nav class="nav-desktop">
                 <a href="{{ url('/') }}" class="nav-link">Home</a>
-                <a href="{{ route('about') }}" class="nav-link">About us</a>
+                <a href="{{ route('about.show') }}" class="nav-link">About us</a>
                 <a href="{{ route('products.index') }}" class="nav-link">Products</a>
-                <a href="{{ route('services') }}" class="nav-link">Services</a>
+                <a href="{{ route('services.index') }}" class="nav-link">Services</a>
                 <a href="{{ route('clients') }}" class="nav-link">Clients</a>
                 
                 <!-- Dropdown -->
@@ -137,18 +137,18 @@
                 <i class="fas fa-home"></i>
                 <span>Home</span>
             </a>
-            <a href="{{ route('about') }}" class="mobile-nav-link">
-                <i class="fas fa-info-circle"></i>
-                <span>About us</span>
-            </a>
+       <a href="{{ route('about.show') }}" class="mobile-nav-link">
+    <i class="fas fa-info-circle"></i>
+    <span>About us</span>
+</a>
             <a href="{{ route('products.index') }}" class="mobile-nav-link">
                 <i class="fas fa-box"></i>
                 <span>Products</span>
             </a>
-            <a href="{{ route('services') }}" class="mobile-nav-link">
-                <i class="fas fa-cogs"></i>
-                <span>Services</span>
-            </a>
+           <a href="{{ route('services.index') }}" class="mobile-nav-link">
+    <i class="fas fa-cogs"></i>
+    <span>Services</span>
+</a>
             <a href="{{ route('clients') }}" class="mobile-nav-link">
                 <i class="fas fa-users"></i>
                 <span>Clients</span>
@@ -263,8 +263,225 @@ window.addEventListener('scroll', function() {
     lastScroll = currentScroll;
 });
 
+// Live Search Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Desktop search
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    
+    // Mobile search
+    const mobileSearchInput = document.querySelector('.mobile-search-input');
+    const mobileSearchBtn = document.querySelector('.mobile-search-btn');
+    
+    // Create search results container
+    function createSearchResultsContainer() {
+        const container = document.createElement('div');
+        container.className = 'search-results';
+        container.style.cssText = `
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            margin-top: 10px;
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+        `;
+        return container;
+    }
+    
+    // Add search results container to desktop search box
+    const searchBox = document.querySelector('.search-box');
+    if (searchBox) {
+        searchBox.style.position = 'relative';
+        const desktopResults = createSearchResultsContainer();
+        searchBox.appendChild(desktopResults);
+        
+        // Search function
+        async function performSearch(query, resultsContainer) {
+            if (query.length < 2) {
+                resultsContainer.style.display = 'none';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/search/products?q=${encodeURIComponent(query)}`);
+                const products = await response.json();
+                
+                if (products.length === 0) {
+                    resultsContainer.innerHTML = '<div class="p-4 text-gray-500 text-center">No products found</div>';
+                    resultsContainer.style.display = 'block';
+                    return;
+                }
+                
+                let html = '';
+                products.forEach(product => {
+                    const imageUrl = product.image ? `/${product.image}` : 'https://via.placeholder.com/50';
+                    html += `
+                        <a href="/products/${product.slug}" class="flex items-center p-3 hover:bg-gray-50 border-b border-gray-100 last:border-0">
+                            <img src="${imageUrl}" alt="${product.name}" class="w-10 h-10 object-cover rounded mr-3">
+                            <div>
+                                <div class="font-medium text-gray-800">${product.name}</div>
+                                <div class="text-xs text-gray-500">${product.category ? product.category.name : 'Product'}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+                
+                resultsContainer.innerHTML = html;
+                resultsContainer.style.display = 'block';
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        }
+        
+        // Desktop search input handler
+        let searchTimeout;
+        searchInput.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+            
+            searchTimeout = setTimeout(() => {
+                performSearch(query, desktopResults);
+            }, 300);
+        });
+        
+        // Close results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchBox.contains(e.target)) {
+                desktopResults.style.display = 'none';
+            }
+        });
+        
+        // Handle search button click
+        searchBtn.addEventListener('click', function() {
+            const query = searchInput.value.trim();
+            if (query.length >= 2) {
+                window.location.href = `/products?search=${encodeURIComponent(query)}`;
+            }
+        });
+        
+        // Handle enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query.length >= 2) {
+                    window.location.href = `/products?search=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+    }
+    
+    // Mobile search
+    if (mobileSearchInput) {
+        // Add results container for mobile
+        const mobileSearchParent = mobileSearchInput.parentElement;
+        mobileSearchParent.style.position = 'relative';
+        const mobileResults = createSearchResultsContainer();
+        mobileResults.style.width = '100%';
+        mobileSearchParent.appendChild(mobileResults);
+        
+        let mobileSearchTimeout;
+        mobileSearchInput.addEventListener('input', function(e) {
+            clearTimeout(mobileSearchTimeout);
+            const query = e.target.value.trim();
+            
+            mobileSearchTimeout = setTimeout(async () => {
+                if (query.length < 2) {
+                    mobileResults.style.display = 'none';
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`/search/products?q=${encodeURIComponent(query)}`);
+                    const products = await response.json();
+                    
+                    if (products.length === 0) {
+                        mobileResults.innerHTML = '<div class="p-4 text-gray-500 text-center">No products found</div>';
+                        mobileResults.style.display = 'block';
+                        return;
+                    }
+                    
+                    let html = '';
+                    products.forEach(product => {
+                        const imageUrl = product.image ? `/${product.image}` : 'https://via.placeholder.com/50';
+                        html += `
+                            <a href="/products/${product.slug}" class="flex items-center p-3 hover:bg-gray-50 border-b border-gray-100 last:border-0" onclick="closeMobileMenu()">
+                                <img src="${imageUrl}" alt="${product.name}" class="w-10 h-10 object-cover rounded mr-3">
+                                <div>
+                                    <div class="font-medium text-gray-800">${product.name}</div>
+                                    <div class="text-xs text-gray-500">${product.category ? product.category.name : 'Product'}</div>
+                                </div>
+                            </a>
+                        `;
+                    });
+                    
+                    mobileResults.innerHTML = html;
+                    mobileResults.style.display = 'block';
+                } catch (error) {
+                    console.error('Search error:', error);
+                }
+            }, 300);
+        });
+        
+        // Handle mobile search button
+        mobileSearchBtn.addEventListener('click', function() {
+            const query = mobileSearchInput.value.trim();
+            if (query.length >= 2) {
+                closeMobileMenu();
+                window.location.href = `/products?search=${encodeURIComponent(query)}`;
+            }
+        });
+        
+        // Handle enter key on mobile
+        mobileSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = mobileSearchInput.value.trim();
+                if (query.length >= 2) {
+                    closeMobileMenu();
+                    window.location.href = `/products?search=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+        
+        // Close mobile results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileSearchParent.contains(e.target)) {
+                mobileResults.style.display = 'none';
+            }
+        });
+    }
+});
 
 </script>
+
+<!-- Add some CSS for search results -->
+<style>
+.search-results {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+</style>
 
 @stack('scripts')
 </body>

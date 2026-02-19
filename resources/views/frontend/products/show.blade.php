@@ -83,23 +83,9 @@
             <div class="md:w-2/5 p-6 md:p-10 border-l border-gray-100">
                 <!-- Category Badge -->
                 <div class="mb-6">
-                    @php
-                    $categories = [
-                        'hvac' => ['HVAC Systems', 'bg-gradient-to-r from-blue-500 to-cyan-500'],
-                        'cooling' => ['Cooling Systems', 'bg-gradient-to-r from-cyan-500 to-teal-500'],
-                        'electrical' => ['Electrical Panels', 'bg-gradient-to-r from-purple-500 to-pink-500'],
-                        'pumps' => ['Water Pumps', 'bg-gradient-to-r from-green-500 to-emerald-500'],
-                        'compression' => ['Compressors', 'bg-gradient-to-r from-orange-500 to-red-500'],
-                    ];
-                    @endphp
-                    
-                    @if(isset($categories[$product->category]))
-                    <span class="inline-block px-4 py-2 {{ $categories[$product->category][1] }} text-white text-sm font-bold rounded-full shadow-md">
-                        {{ $categories[$product->category][0] }}
-                    </span>
-                    @else
-                    <span class="inline-block px-4 py-2 bg-gray-600 text-white text-sm font-bold rounded-full">
-                        {{ ucfirst($product->category) }}
+                    @if($product->category)
+                    <span class="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-bold rounded-full shadow-md">
+                        {{ $product->category()->first()->name ?? 'Uncategorized' }}
                     </span>
                     @endif
                 </div>
@@ -158,17 +144,12 @@
                     </h3>
                     <div class="space-y-3">
                         @php
-                        $features = [
-                            'hvac' => ['Energy Efficient', 'Durable Construction', 'Easy Maintenance', 'Quiet Operation'],
-                            'cooling' => ['High Efficiency', 'Robust Design', 'Low Maintenance', 'Reliable Performance'],
-                            'electrical' => ['Safety Certified', 'Compact Design', 'Easy Installation', 'Long Lifespan'],
-                            'pumps' => ['High Capacity', 'Corrosion Resistant', 'Energy Saving', 'Low Noise'],
-                            'compression' => ['High Pressure', 'Oil-Free Option', 'Energy Efficient', 'Durable'],
-                        ];
+                        // Get features from the product's features_array attribute
+                        $productFeatures = $product->features_array;
                         @endphp
                         
-                        @if(isset($features[$product->category]))
-                            @foreach($features[$product->category] as $feature)
+                        @if(!empty($productFeatures))
+                            @foreach($productFeatures as $feature)
                             <div class="flex items-center bg-gradient-to-r from-gray-50 to-white p-3 rounded-lg border border-gray-200 hover:border-blue-300 transition">
                                 <i class="fas fa-check text-green-500 mr-3"></i>
                                 <span class="text-gray-700 font-medium">{{ $feature }}</span>
@@ -236,7 +217,7 @@
                             </div>
                             <div class="flex justify-between py-2 border-b border-gray-100">
                                 <span class="text-gray-600">Category</span>
-                                <span class="font-medium">{{ $categories[$product->category][0] ?? ucfirst($product->category) }}</span>
+                                <span class="font-medium">{{ $product->category->name ?? 'N/A' }}</span>
                             </div>
                             <div class="flex justify-between py-2 border-b border-gray-100">
                                 <span class="text-gray-600">Status</span>

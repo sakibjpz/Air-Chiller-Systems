@@ -3,211 +3,572 @@
 @section('title', 'Edit Solution')
 
 @section('content')
-<div class="container mx-auto px-4 py-8 max-w-4xl">
+<div class="container mx-auto px-4 py-8 max-w-6xl">
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-blue-800 mb-2">Edit Solution</h1>
-        <p class="text-gray-600">Update solution details</p>
+        <p class="text-gray-600">Update solution details and content</p>
     </div>
 
-    <div class="bg-white rounded-xl shadow-lg p-6">
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Tabs Navigation -->
+        <div class="border-b border-gray-200 bg-gray-50">
+            <nav class="flex -mb-px">
+                <button type="button" onclick="showTab('basic')" class="tab-button active px-6 py-4 text-sm font-medium border-b-2 border-blue-600 text-blue-600" id="tab-basic-btn">
+                    <i class="fas fa-info-circle mr-2"></i>Basic Info
+                </button>
+                <button type="button" onclick="showTab('features')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" id="tab-features-btn">
+                    <i class="fas fa-cubes mr-2"></i>Features
+                </button>
+                <button type="button" onclick="showTab('equipment')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" id="tab-equipment-btn">
+                    <i class="fas fa-tools mr-2"></i>Equipment
+                </button>
+                <button type="button" onclick="showTab('statistics')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" id="tab-statistics-btn">
+                    <i class="fas fa-chart-bar mr-2"></i>Statistics
+                </button>
+                <button type="button" onclick="showTab('seo')" class="tab-button px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" id="tab-seo-btn">
+                    <i class="fas fa-search mr-2"></i>SEO
+                </button>
+            </nav>
+        </div>
+
         <form action="{{ route('admin.solutions.update', $solution) }}" method="POST" enctype="multipart/form-data" id="solutionForm">
             @csrf
             @method('PUT')
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <!-- Left Column -->
-                <div class="space-y-6">
-                    <!-- Title -->
-                    <div>
-                        <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Title *
-                        </label>
-                        <input type="text" 
-                               id="title" 
-                               name="title" 
-                               value="{{ old('title', $solution->title) }}"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                               placeholder="e.g., Residence, Retail, Office"
-                               required>
-                        @error('title')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+            <div class="p-6">
+                <!-- TAB 1: BASIC INFO -->
+                <div id="tab-basic" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Left Column -->
+                        <div class="space-y-6">
+                            <!-- Title -->
+                            <div>
+                                <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Title <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="title" 
+                                       name="title" 
+                                       value="{{ old('title', $solution->title) }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="e.g., Hospital HVAC Solutions"
+                                       required>
+                                @error('title')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
 
-                    <!-- Button Text -->
-                    <div>
-                        <label for="button_text" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Button Text
-                        </label>
-                        <input type="text" 
-                               id="button_text" 
-                               name="button_text" 
-                               value="{{ old('button_text', $solution->button_text) }}"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                               placeholder="LEARN MORE">
-                    </div>
+                            <!-- Why Heading -->
+                            <div>
+                                <label for="why_heading" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Why Section Heading
+                                </label>
+                                <input type="text" 
+                                       id="why_heading" 
+                                       name="why_heading" 
+                                       value="{{ old('why_heading', $solution->why_heading ?? 'Why Need Specialized HVAC Systems') }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="Why Need Specialized HVAC Systems">
+                            </div>
 
-                    <!-- Button Link -->
-                    <div>
-                        <label for="button_link" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Button Link
-                        </label>
-                        <input type="url" 
-                               id="button_link" 
-                               name="button_link" 
-                               value="{{ old('button_link', $solution->button_link) }}"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                               placeholder="https://example.com/page">
-                    </div>
+                            <!-- Why Description -->
+                            <div>
+                                <label for="why_description" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Why Section Description
+                                </label>
+                                <textarea id="why_description" 
+                                          name="why_description" 
+                                          rows="2"
+                                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                          placeholder="Brief description for why section">{{ old('why_description', $solution->why_description) }}</textarea>
+                            </div>
 
-                    <!-- Icon -->
-                    <div>
-                        <label for="icon" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Font Awesome Icon
-                        </label>
-                        <input type="text" 
-                               id="icon" 
-                               name="icon" 
-                               value="{{ old('icon', $solution->icon) }}"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                               placeholder="fas fa-home">
-                        <p class="mt-1 text-xs text-gray-500">
-                            Example: fas fa-home, fas fa-store, fas fa-building
-                        </p>
-                    </div>
+                            <!-- Equipment Heading -->
+                            <div>
+                                <label for="equipment_heading" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Equipment Section Heading
+                                </label>
+                                <input type="text" 
+                                       id="equipment_heading" 
+                                       name="equipment_heading" 
+                                       value="{{ old('equipment_heading', $solution->equipment_heading ?? 'Equipment We Provide') }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="Equipment We Provide">
+                            </div>
 
-                    <!-- Sort Order -->
-                    <div>
-                        <label for="sort_order" class="block text-sm font-semibold text-gray-700 mb-2">
-                            Sort Order
-                        </label>
-                        <input type="number" 
-                               id="sort_order" 
-                               name="sort_order" 
-                               value="{{ old('sort_order', $solution->sort_order) }}"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                               min="0">
-                    </div>
-                </div>
+                            <!-- Expertise Heading -->
+                            <div>
+                                <label for="expertise_heading" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Expertise Section Heading
+                                </label>
+                                <input type="text" 
+                                       id="expertise_heading" 
+                                       name="expertise_heading" 
+                                       value="{{ old('expertise_heading', $solution->expertise_heading ?? 'Our Expertise') }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="Our Expertise">
+                            </div>
 
-                <!-- Right Column -->
-                <div class="space-y-6">
-                    <!-- Current Image -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            Current Image
-                        </label>
-                        <div class="flex items-center space-x-4">
-                            @if($solution->image)
-                                <div class="relative">
-                                    <img src="{{ asset($solution->image) }}" 
-                                         alt="{{ $solution->title }}" 
-                                         class="w-32 h-32 object-cover rounded-lg border-2 border-blue-200">
-                                    <a href="{{ asset($solution->image) }}" 
-                                       target="_blank"
-                                       class="absolute bottom-2 right-2 bg-blue-600 text-white p-1 rounded-full">
-                                        <i class="fas fa-expand text-xs"></i>
-                                    </a>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-600 mb-2">Upload new image to replace</p>
-                                </div>
-                            @else
-                                <div class="text-center w-full">
-                                    <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                            <!-- Button Text -->
+                            <div>
+                                <label for="button_text" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Button Text
+                                </label>
+                                <input type="text" 
+                                       id="button_text" 
+                                       name="button_text" 
+                                       value="{{ old('button_text', $solution->button_text) }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="LEARN MORE">
+                            </div>
+
+                            <!-- Button Link -->
+                            <div>
+                                <label for="button_link" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Button Link
+                                </label>
+                                <input type="url" 
+                                       id="button_link" 
+                                       name="button_link" 
+                                       value="{{ old('button_link', $solution->button_link) }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="https://example.com/page">
+                                <p class="mt-1 text-xs text-gray-500">Leave empty to link to solution page</p>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <!-- Current Image -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Current Image
+                                </label>
+                                @if($solution->image)
+                                    <div class="flex items-center space-x-4">
+                                        <img src="{{ asset($solution->image) }}" 
+                                             alt="{{ $solution->title }}" 
+                                             class="w-32 h-32 object-cover rounded-lg border-2 border-blue-200">
+                                        <div>
+                                            <p class="text-sm text-gray-600">Current image</p>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center">
                                         <i class="fas fa-image text-gray-400 text-3xl"></i>
                                     </div>
-                                    <p class="text-sm text-gray-500">No image uploaded</p>
+                                @endif
+                            </div>
+
+                            <!-- New Image Upload -->
+                            <div>
+                                <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    New Image (Optional)
+                                </label>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition duration-300">
+                                    <div id="imagePreview" class="mb-3 hidden">
+                                        <img id="previewImage" class="mx-auto h-24 w-24 object-cover rounded-lg">
+                                    </div>
+                                    <input type="file" 
+                                           id="image" 
+                                           name="image" 
+                                           accept="image/*"
+                                           class="hidden"
+                                           onchange="previewFile()">
+                                    <button type="button" 
+                                            onclick="document.getElementById('image').click()"
+                                            class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg transition duration-300 text-sm">
+                                        <i class="fas fa-upload mr-2"></i>Upload New Image
+                                    </button>
                                 </div>
-                            @endif
+                                @error('image')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Icon -->
+                            <div>
+                                <label for="icon" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Font Awesome Icon
+                                </label>
+                                <input type="text" 
+                                       id="icon" 
+                                       name="icon" 
+                                       value="{{ old('icon', $solution->icon) }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       placeholder="fas fa-home">
+                                <p class="mt-1 text-xs text-gray-500">
+                                    Example: fas fa-home, fas fa-store, fas fa-building
+                                </p>
+                            </div>
+
+                            <!-- Sort Order -->
+                            <div>
+                                <label for="sort_order" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Sort Order
+                                </label>
+                                <input type="number" 
+                                       id="sort_order" 
+                                       name="sort_order" 
+                                       value="{{ old('sort_order', $solution->sort_order) }}"
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                       min="0">
+                            </div>
+
+                            <!-- Status -->
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Status <span class="text-red-500">*</span>
+                                </label>
+                                <div class="flex items-center space-x-4">
+                                    <label class="flex items-center">
+                                        <input type="radio" 
+                                               name="is_active" 
+                                               value="1" 
+                                               {{ old('is_active', $solution->is_active) == '1' ? 'checked' : '' }}
+                                               class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                                               required>
+                                        <span class="ml-2 text-gray-700">Active</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" 
+                                               name="is_active" 
+                                               value="0" 
+                                               {{ old('is_active', $solution->is_active) == '0' ? 'checked' : '' }}
+                                               class="h-4 w-4 text-blue-600 focus:ring-blue-500">
+                                        <span class="ml-2 text-gray-700">Inactive</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- New Image Upload -->
-                    <div>
-                        <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">
-                            New Image (Optional)
+                    <!-- Description (Full Width) -->
+                    <div class="mt-6">
+                        <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Description <span class="text-red-500">*</span>
                         </label>
-                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition duration-300">
-                            <div id="imagePreview" class="mb-3 hidden">
-                                <img id="previewImage" class="mx-auto h-24 w-24 object-cover rounded-lg">
-                            </div>
-                            <input type="file" 
-                                   id="image" 
-                                   name="image" 
-                                   accept="image/*"
-                                   class="hidden"
-                                   onchange="previewFile()">
-                            <button type="button" 
-                                    onclick="document.getElementById('image').click()"
-                                    class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2 px-4 rounded-lg transition duration-300 text-sm">
-                                <i class="fas fa-upload mr-2"></i>Upload New Image
-                            </button>
-                        </div>
-                        @error('image')
+                        <textarea id="description" 
+                                  name="description" 
+                                  rows="4"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                  placeholder="Main description for the solution..."
+                                  required>{{ old('description', $solution->description) }}</textarea>
+                        @error('description')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
 
-                    <!-- Status -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">
-                            Status *
-                        </label>
-                        <div class="flex items-center space-x-4">
-                            <label class="flex items-center">
-                                <input type="radio" 
-                                       name="is_active" 
-                                       value="1" 
-                                       {{ old('is_active', $solution->is_active) == '1' ? 'checked' : '' }}
-                                       class="h-4 w-4 text-blue-600 focus:ring-blue-500"
-                                       required>
-                                <span class="ml-2 text-gray-700">Active</span>
+                <!-- TAB 2: FEATURES -->
+                <div id="tab-features" class="tab-content hidden">
+                    <div class="mb-4 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Feature Boxes</h3>
+                        <button type="button" onclick="addFeature()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fas fa-plus mr-2"></i>Add Feature
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">These appear as feature boxes in the "Why" section</p>
+                    
+                    <div id="features-container" class="space-y-4">
+                        <!-- Features will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 3: EQUIPMENT -->
+                <div id="tab-equipment" class="tab-content hidden">
+                    <div class="mb-4 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Equipment List</h3>
+                        <button type="button" onclick="addEquipment()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fas fa-plus mr-2"></i>Add Equipment
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Equipment items with descriptions</p>
+                    
+                    <div id="equipment-container" class="space-y-4">
+                        <!-- Equipment will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 4: STATISTICS -->
+                <div id="tab-statistics" class="tab-content hidden">
+                    <div class="mb-4 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-800">Statistics / Expertise Numbers</h3>
+                        <button type="button" onclick="addStatistic()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm">
+                            <i class="fas fa-plus mr-2"></i>Add Statistic
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Numbers that showcase your expertise (e.g., 50+ Facilities Served)</p>
+                    
+                    <div id="statistics-container" class="space-y-4">
+                        <!-- Statistics will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- TAB 5: SEO -->
+                <div id="tab-seo" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <div>
+                            <label for="meta_title" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Meta Title
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" 
-                                       name="is_active" 
-                                       value="0" 
-                                       {{ old('is_active', $solution->is_active) == '0' ? 'checked' : '' }}
-                                       class="h-4 w-4 text-blue-600 focus:ring-blue-500">
-                                <span class="ml-2 text-gray-700">Inactive</span>
+                            <input type="text" 
+                                   id="meta_title" 
+                                   name="meta_title" 
+                                   value="{{ old('meta_title', $solution->meta_title) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                   placeholder="SEO Title - leave empty to use solution title">
+                        </div>
+
+                        <div>
+                            <label for="meta_description" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Meta Description
                             </label>
+                            <textarea id="meta_description" 
+                                      name="meta_description" 
+                                      rows="3"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                      placeholder="SEO Description">{{ old('meta_description', $solution->meta_description) }}</textarea>
+                        </div>
+
+                        <div>
+                            <label for="meta_keywords" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Meta Keywords
+                            </label>
+                            <input type="text" 
+                                   id="meta_keywords" 
+                                   name="meta_keywords" 
+                                   value="{{ old('meta_keywords', $solution->meta_keywords) }}"
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                                   placeholder="hvac, hospital, cooling, comma, separated">
+                            <p class="mt-1 text-xs text-gray-500">Comma separated keywords</p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Description -->
-            <div class="mb-8">
-                <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
-                    Description
-                </label>
-                <textarea id="description" 
-                          name="description" 
-                          rows="3"
-                          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                          placeholder="Enter solution description...">{{ old('description', $solution->description) }}</textarea>
-                @error('description')
-                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Form Actions -->
-            <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-                <a href="{{ route('admin.solutions.index') }}" 
-                   class="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition duration-300">
-                    Cancel
-                </a>
-                <button type="submit" 
-                        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-300">
-                    <i class="fas fa-save mr-2"></i>Update Solution
-                </button>
+            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between">
+                <div>
+                    <button type="button" onclick="previousTab()" id="prevBtn" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition duration-300 mr-2 hidden">
+                        <i class="fas fa-arrow-left mr-2"></i>Previous
+                    </button>
+                    <button type="button" onclick="nextTab()" id="nextBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-300">
+                        Next<i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+                <div>
+                    <a href="{{ route('admin.solutions.index') }}" 
+                       class="px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition duration-300 mr-2">
+                        Cancel
+                    </a>
+                    <button type="submit" 
+                            class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition duration-300">
+                        <i class="fas fa-save mr-2"></i>Update Solution
+                    </button>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
 <script>
+let currentTab = 'basic';
+let featureCount = 0;
+let equipmentCount = 0;
+let statisticCount = 0;
+
+// Load existing data from Laravel
+const existingFeatures = @json($solution->features ?? []);
+const existingEquipment = @json($solution->equipment ?? []);
+const existingStatistics = @json($solution->statistics ?? []);
+
+function showTab(tabId) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    
+    // Show selected tab
+    document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    
+    // Update button styles
+    document.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active', 'border-blue-600', 'text-blue-600');
+        btn.classList.add('border-transparent', 'text-gray-500');
+    });
+    
+    document.getElementById(`tab-${tabId}-btn`).classList.add('active', 'border-blue-600', 'text-blue-600');
+    document.getElementById(`tab-${tabId}-btn`).classList.remove('border-transparent', 'text-gray-500');
+    
+    currentTab = tabId;
+    updateNavButtons();
+}
+
+function updateNavButtons() {
+    const tabs = ['basic', 'features', 'equipment', 'statistics', 'seo'];
+    const currentIndex = tabs.indexOf(currentTab);
+    
+    // Previous button
+    if (currentIndex > 0) {
+        document.getElementById('prevBtn').classList.remove('hidden');
+    } else {
+        document.getElementById('prevBtn').classList.add('hidden');
+    }
+    
+    // Next button
+    if (currentIndex < tabs.length - 1) {
+        document.getElementById('nextBtn').classList.remove('hidden');
+    } else {
+        document.getElementById('nextBtn').classList.add('hidden');
+    }
+}
+
+function nextTab() {
+    const tabs = ['basic', 'features', 'equipment', 'statistics', 'seo'];
+    const currentIndex = tabs.indexOf(currentTab);
+    if (currentIndex < tabs.length - 1) {
+        showTab(tabs[currentIndex + 1]);
+    }
+}
+
+function previousTab() {
+    const tabs = ['basic', 'features', 'equipment', 'statistics', 'seo'];
+    const currentIndex = tabs.indexOf(currentTab);
+    if (currentIndex > 0) {
+        showTab(tabs[currentIndex - 1]);
+    }
+}
+
+// Feature functions
+function addFeature(featureData = null) {
+    const container = document.getElementById('features-container');
+    const index = featureCount++;
+    
+    const icon = featureData?.icon || 'fas fa-shield-alt';
+    const title = featureData?.title || '';
+    const description = featureData?.description || '';
+    
+    const html = `
+        <div class="feature-item bg-gray-50 p-4 rounded-lg border border-gray-200" data-index="${index}">
+            <div class="flex justify-between items-center mb-3">
+                <h4 class="font-semibold text-gray-700">Feature #${featureCount}</h4>
+                <button type="button" onclick="removeFeature(this)" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Icon</label>
+                    <input type="text" 
+                           name="features[${index}][icon]" 
+                           value="${icon}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           placeholder="fas fa-icon">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Title</label>
+                    <input type="text" 
+                           name="features[${index}][title]" 
+                           value="${title}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           placeholder="Feature title">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Description</label>
+                    <input type="text" 
+                           name="features[${index}][description]" 
+                           value="${description}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           placeholder="Feature description">
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', html);
+}
+
+function removeFeature(button) {
+    button.closest('.feature-item').remove();
+}
+
+// Equipment functions
+function addEquipment(equipmentData = null) {
+    const container = document.getElementById('equipment-container');
+    const index = equipmentCount++;
+    
+    const value = equipmentData || '';
+    
+    const html = `
+        <div class="equipment-item bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <div class="flex justify-between items-center">
+                <div class="flex-1">
+                    <input type="text" 
+                           name="equipment[]" 
+                           value="${value}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           placeholder="Equipment item with description">
+                </div>
+                <button type="button" onclick="removeEquipment(this)" class="ml-3 text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', html);
+}
+
+function removeEquipment(button) {
+    button.closest('.equipment-item').remove();
+}
+
+// Statistics functions
+function addStatistic(statData = null) {
+    const container = document.getElementById('statistics-container');
+    const index = statisticCount++;
+    
+    const value = statData?.value || '';
+    const label = statData?.label || '';
+    
+    const html = `
+        <div class="statistic-item bg-gray-50 p-4 rounded-lg border border-gray-200">
+            <div class="flex justify-between items-center mb-3">
+                <h4 class="font-semibold text-gray-700">Statistic #${statisticCount}</h4>
+                <button type="button" onclick="removeStatistic(this)" class="text-red-600 hover:text-red-800">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Value</label>
+                    <input type="text" 
+                           name="statistics[${index}][value]" 
+                           value="${value}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           placeholder="50+">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Label</label>
+                    <input type="text" 
+                           name="statistics[${index}][label]" 
+                           value="${label}"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                           placeholder="Facilities Served">
+                </div>
+            </div>
+        </div>
+    `;
+    
+    container.insertAdjacentHTML('beforeend', html);
+}
+
+function removeStatistic(button) {
+    button.closest('.statistic-item').remove();
+}
+
+// Image preview
 function previewFile() {
     const preview = document.getElementById('previewImage');
     const previewContainer = document.getElementById('imagePreview');
@@ -221,10 +582,40 @@ function previewFile() {
 
     if (file) {
         reader.readAsDataURL(file);
-    } else {
-        preview.src = '';
-        previewContainer.classList.add('hidden');
     }
 }
+
+// Initialize with existing data
+document.addEventListener('DOMContentLoaded', function() {
+    // Load features
+    if (existingFeatures && existingFeatures.length > 0) {
+        existingFeatures.forEach(feature => addFeature(feature));
+    } else {
+        // Default features
+        addFeature({icon: 'fas fa-shield-alt', title: 'Infection Control', description: 'Precise air filtration and pressure control to prevent cross-contamination'});
+        addFeature({icon: 'fas fa-temperature-low', title: 'Temperature Control', description: 'Critical areas require specific temperature ranges'});
+        addFeature({icon: 'fas fa-wind', title: 'Air Quality', description: 'HEPA filters and UVGI systems for sterile environments'});
+    }
+    
+    // Load equipment
+    if (existingEquipment && existingEquipment.length > 0) {
+        existingEquipment.forEach(item => addEquipment(item));
+    } else {
+        // Default equipment
+        addEquipment('Medical Grade Chillers: For MRI machines, lab equipment cooling');
+        addEquipment('Operating Theater AHUs: With HEPA filtration and pressure control');
+        addEquipment('Isolation Room Systems: Negative/positive pressure systems');
+        addEquipment('Central Cooling Plants: For entire complexes');
+    }
+    
+    // Load statistics
+    if (existingStatistics && existingStatistics.length > 0) {
+        existingStatistics.forEach(stat => addStatistic(stat));
+    } else {
+        // Default statistics
+        addStatistic({value: '50+', label: 'Facilities Served'});
+        addStatistic({value: '24/7', label: 'Support Service'});
+    }
+});
 </script>
 @endsection

@@ -49,7 +49,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('about') }}" class="text-blue-200 hover:text-white transition text-sm flex items-center">
+                        <a href="{{ route('about.show') }}" class="text-blue-200 hover:text-white transition text-sm flex items-center">
                             <i class="fas fa-chevron-right text-xs mr-2"></i>
                             About Us
                         </a>

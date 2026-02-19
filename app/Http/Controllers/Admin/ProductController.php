@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('sort_order')->orderBy('created_at', 'desc')->get();
+        $products = Product::with('category')->orderBy('sort_order')->orderBy('created_at', 'desc')->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -42,8 +42,8 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'features' => 'nullable|string',  // Added this line
-            'category' => 'required|string',
+            'features' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
             'sort_order' => 'nullable|integer',
             'is_active' => 'required|boolean',
         ]);
@@ -64,7 +64,6 @@ class ProductController extends Controller
         
         // Handle image upload if present
         if ($request->hasFile('image')) {
-            // Store in public/images/products folder
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path('images/products'), $imageName);
             $validated['image'] = 'images/products/' . $imageName;
@@ -73,7 +72,6 @@ class ProductController extends Controller
         // Create product
         Product::create($validated);
 
-        // Redirect with success message
         return redirect()->route('admin.products.index')
                          ->with('success', 'Product created successfully!');
     }
@@ -101,8 +99,8 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'features' => 'nullable|string',  // Added this line
-            'category' => 'required|string',
+            'features' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
             'sort_order' => 'nullable|integer',
             'is_active' => 'required|boolean',
         ]);
@@ -125,7 +123,6 @@ class ProductController extends Controller
         
         // Handle image upload if present
         if ($request->hasFile('image')) {
-            // Store in public/images/products folder
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path('images/products'), $imageName);
             $validated['image'] = 'images/products/' . $imageName;
@@ -139,7 +136,6 @@ class ProductController extends Controller
         // Update product
         $product->update($validated);
 
-        // Redirect with success message
         return redirect()->route('admin.products.index')
                          ->with('success', 'Product updated successfully!');
     }

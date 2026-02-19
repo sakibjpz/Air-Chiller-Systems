@@ -27,15 +27,16 @@
 
                 
                 <!-- Category -->
+<!-- Category -->
 <div>
-    <label for="category" class="block text-sm font-medium text-gray-700 mb-1">
+    <label for="category_id" class="block text-sm font-medium text-gray-700 mb-1">
         Category *
     </label>
-    <select id="category" name="category" 
+    <select id="category_id" name="category_id" 
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
         <option value="">Select Category</option>
         @foreach($categories as $category)
-        <option value="{{ $category->slug }}">{{ $category->name }}</option>
+        <option value="{{ $category->id }}">{{ $category->name }}</option>
         @endforeach
     </select>
 </div>

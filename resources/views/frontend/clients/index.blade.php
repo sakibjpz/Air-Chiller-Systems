@@ -133,7 +133,7 @@
                 Partner with us for innovative engineering solutions that drive your business forward.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('services') }}" 
+                <a href="{{ route('services.index') }}" 
                    class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300">
                     <i class="fas fa-cogs mr-2"></i>
                     Our Services

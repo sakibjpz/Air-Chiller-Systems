@@ -13,15 +13,16 @@ class Product extends Model
         'name',
         'slug',
         'description',
-        'features',  // Added this
+        'features',
         'image',
         'category',
+        'category_id',  // Added this
         'sort_order',
         'is_active',
     ];
 
     protected $casts = [
-        'features' => 'array',  // Added this
+        'features' => 'array',
         'is_active' => 'boolean',
     ];
 
@@ -43,6 +44,13 @@ class Product extends Model
         return $query->orderBy('sort_order')->orderBy('name');
     }
 
+    // NEW: Relationship with Category using foreign key
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    // Keep this for backward compatibility during transition
     public function categoryRelation()
     {
         return $this->belongsTo(Category::class, 'category', 'slug');

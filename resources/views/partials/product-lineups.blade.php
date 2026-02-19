@@ -17,7 +17,7 @@
             @foreach($productLineups->take(4) as $product)
             <div class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 cursor-pointer">
                 <!-- Product Image Container with Clickable Area -->
-                <a href="{{ route('products.show', ['slug' => $product->slug]) }}" class="block">
+                <a href="{{ route('product-lineups.show', $product->slug) }}" class="block">
                     <div class="relative overflow-hidden h-56 md:h-64">
                         @if($product->image)
                         <img src="{{ asset($product->image) }}" 
@@ -42,7 +42,7 @@
                 <!-- Product Content -->
                 <div class="p-6">
                     <!-- Product Title as Clickable Link -->
-                    <a href="{{ route('products.show', ['slug' => $product->slug]) }}" 
+                    <a href="{{ route('product-lineups.show', $product->slug) }}" 
                        class="block mb-3 group">
                         <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
                             {{ $product->title }}
@@ -66,7 +66,7 @@
             @foreach($productLineups->slice(4, 4) as $product)
             <div class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 cursor-pointer">
                 <!-- Product Image Container with Clickable Area -->
-                <a href="{{ route('products.show', ['slug' => $product->slug]) }}" class="block">
+                <a href="{{ route('product-lineups.show', $product->slug) }}" class="block">
                     <div class="relative overflow-hidden h-56 md:h-64">
                         @if($product->image)
                         <img src="{{ asset($product->image) }}" 
@@ -91,7 +91,7 @@
                 <!-- Product Content -->
                 <div class="p-6">
                     <!-- Product Title as Clickable Link -->
-                    <a href="{{ route('products.show', ['slug' => $product->slug]) }}" 
+                    <a href="{{ route('product-lineups.show', $product->slug) }}" 
                        class="block mb-3 group">
                         <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
                             {{ $product->title }}
@@ -113,7 +113,7 @@
         <!-- Optional: View All Products -->
         @if(count($productLineups) > 8)
         <div class="text-center mt-12 md:mt-16">
-            <a href="{{ route('products.index') }}" 
+            <a href="{{ route('product-lineups.index') }}" 
                class="inline-flex items-center justify-center px-8 py-3 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold rounded-full transition-all duration-300 hover:scale-105">
                 View All Products
                 <i class="fas fa-chevron-right ml-2"></i>

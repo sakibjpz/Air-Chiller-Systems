@@ -64,11 +64,12 @@
                     @endif
                     
                     <!-- Category Badge -->
-                    <div class="absolute top-4 left-4">
-                        <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-semibold rounded-full">
-                            {{ $categories[$product->category] ?? ucfirst($product->category) }}
-                        </span>
-                    </div>
+                 <!-- Category Badge -->
+<div class="absolute top-4 left-4">
+    <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-semibold rounded-full">
+        {{ $product->category->name ?? 'Uncategorized' }}
+    </span>
+</div>
                 </div>
                 
                 <!-- Product Content -->
@@ -149,11 +150,11 @@
                     <i class="fas fa-phone-alt mr-2"></i>
                     Contact Sales
                 </a>
-                <a href="{{ route('services') }}" 
-                   class="inline-flex items-center justify-center px-6 py-3 bg-white text-blue-600 font-medium rounded-lg border border-blue-200 hover:bg-blue-50 transition duration-300">
-                    <i class="fas fa-cogs mr-2"></i>
-                    Our Services
-                </a>
+              <a href="{{ route('services.index') }}" 
+   class="inline-flex items-center justify-center px-6 py-3 bg-white text-blue-600 font-medium rounded-lg border border-blue-200 hover:bg-blue-50 transition duration-300">
+    <i class="fas fa-cogs mr-2"></i>
+    Our Services
+</a>
             </div>
         </div>
     </div>

@@ -36,10 +36,17 @@
                         {{ $solution->title }}
                     </h3>
 
-                    <!-- LG-Style Rectangular Button -->
+                    <!-- Short Description (optional) -->
+                    @if($solution->description)
+                    <p class="text-gray-600 mb-4 line-clamp-2">
+                        {{ Str::limit($solution->description, 100) }}
+                    </p>
+                    @endif
+
+                    <!-- LG-Style Rectangular Button - FIXED: Using dynamic route with slug -->
                     @if($solution->button_text)
                     <div class="mt-4 flex justify-center">
-                        <a href="{{ route($solution->button_link) }}" 
+                        <a href="{{ route('solutions.show', $solution->slug) }}" 
                            class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 group">
                             <span>{{ $solution->button_text }}</span>
                             <i class="fas fa-arrow-right ml-3 transform group-hover:translate-x-1 transition-transform duration-300"></i>

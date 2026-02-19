@@ -12,20 +12,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('is_active', true)
+        $products = Product::with('category')
+                          ->where('is_active', true)
                           ->orderBy('sort_order')
                           ->orderBy('created_at', 'desc')
                           ->get();
         
-        // Group products by category for the frontend
-        $categories = [
-            'all' => 'All Products',
-            'hvac' => 'HVAC Systems',
-            'cooling' => 'Cooling Systems',
-            'electrical' => 'Electrical Panels',
-            'pumps' => 'Water Pumps',
-            'compression' => 'Compressors',
-        ];
+        // Get all active product categories from database
+        $categories = \App\Models\Category::where('type', 'product')
+                                         ->where('is_active', true)
+                                         ->orderBy('sort_order')
+                                         ->orderBy('name')
+                                         ->get();
         
         return view('frontend.products.index', compact('products', 'categories'));
     }
@@ -33,9 +31,35 @@ class ProductController extends Controller
     /**
      * Display a single product.
      */
-    public function show($slug)
+   public function show($slug)
+{
+    $product = Product::with('category')
+                      ->where('slug', $slug)
+                      ->where('is_active', true)
+                      ->firstOrFail();
+    return view('frontend.products.show', compact('product'));
+}
+
+    /**
+     * Search products for live search.
+     */
+    public function search(Request $request)
     {
-        $product = Product::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        return view('frontend.products.show', compact('product'));
+        $query = $request->get('q');
+        
+        if (strlen($query) < 2) {
+            return response()->json([]);
+        }
+        
+        $products = Product::with('category')
+                          ->where('is_active', true)
+                          ->where(function($q) use ($query) {
+                              $q->where('name', 'LIKE', "%{$query}%")
+                                ->orWhere('description', 'LIKE', "%{$query}%");
+                          })
+                          ->limit(5)
+                          ->get(['id', 'name', 'slug', 'image', 'category_id']);
+        
+        return response()->json($products);
     }
 }
